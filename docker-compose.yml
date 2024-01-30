@@ -9,7 +9,7 @@ services:
       MYSQL_PASSWORD: 'hmlsvcrapp-password!'
       MYSQL_ROOT_PASSWORD: 'hmlsvcrapp-password!-root'
     volumes:
-      - /Users/robert/Python/hmlsvcrdocker/createdatabase:/docker-entrypoint-initdb.d
+      - createdatabase:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
@@ -21,7 +21,7 @@ services:
            python entrypoint.sh
            python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - /Users/robert/Python/hmlsvcrdocker:/usr/src/app
+      - ./:/usr/src/app
     ports:
       - "8000:8000"
     depends_on:
