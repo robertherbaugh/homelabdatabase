@@ -9,21 +9,15 @@ services:
       MYSQL_PASSWORD: 'hmlsvcrapp-password!'
       MYSQL_ROOT_PASSWORD: 'hmlsvcrapp-password!-root'
     volumes:
-      - ./createdatabase.sql:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
+      - /createdatabase.sql:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
+
   web:
-    build: .
-    command: >
-      sh -c "python manage.py migrate &&
-           python create_superuser.py &&
-           python entrypoint.sh
-           python manage.py runserver 0.0.0.0:8000"
-    volumes:
-      - ./:/usr/src/app
+    image: rherbaugh/homelabdatabase:latest
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
       - db
     environment:
@@ -31,6 +25,12 @@ services:
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_EMAIL=admin@example.com
       - DJANGO_SUPERUSER_PASSWORD=adminpassword
+    command: >
+      sh -c "sleep 60 &&
+         python create_superuser.py &&
+         python manage.py makemigrations &&
+         python manage.py migrate &&
+         python manage.py runserver 0.0.0.0:8000"
 
 volumes:
   mysql_data:
