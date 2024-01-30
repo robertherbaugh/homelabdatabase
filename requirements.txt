@@ -1,0 +1,3 @@
+# Other dependencies, if any
+Django
+mysqlclient
