@@ -30,6 +30,17 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
+# Proxy Configuration
+CSRF_TRUSTED_ORIGINS = [
+    'https://homelabdb.herbaughmanor.net',
+]
+
+USE_X_FORWARDED_HOST = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Be cautious with CORS_ALLOW_ALL_ORIGINS in production
+#CORS_ALLOW_ALL_ORIGINS = True  # Or specify CORS_ALLOWED_ORIGINS
 
 # Application definition
 
@@ -40,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'hmlsvcrapp',
 ]
 
@@ -51,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'hmlsvcr.urls'
