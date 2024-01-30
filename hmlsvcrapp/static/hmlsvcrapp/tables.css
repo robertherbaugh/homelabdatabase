@@ -1,0 +1,109 @@
+/* Table Styles */
+.table-container {
+    overflow-x: auto; /* For responsive scrolling on small screens */
+    margin: auto;
+    padding: 20px;
+}
+
+table {
+    width: auto; /* Full-width tables */
+    border-collapse: collapse; /* Collapse borders */
+    margin: 25px 0; /* Spacing around the table */
+    font-size: 0.9em; /* Slightly smaller font size for table content */
+    min-width: 400px; /* Minimum table width */
+    border-radius: 5px 5px 0 0; /* Rounded corners at the top of the table */
+    overflow: hidden; /* Hide overflow for the rounded corners */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+}
+
+th, td {
+    padding: 12px 15px; /* Spacing within cells */
+    text-align: left; /* Align text to the left */
+}
+
+th {
+    background-color: #009879; /* A nice green shade for header background */
+    color: #ffffff; /* White color for header text */
+    text-transform: uppercase; /* Uppercase letters for the headers */
+}
+
+tr {
+    border-bottom: 1px solid #dddddd; /* Light grey border under each row */
+}
+
+tr:nth-of-type(even) {
+    background-color: #f3f3f3; /* Zebra stripes for rows */
+}
+
+tr:last-of-type {
+    border-bottom: 2px solid #009879; /* Green border for the last row */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Light grey background on hover */
+}
+
+/* Buttons and actions */
+.btn-edit {
+    background-color: #f0ad4e; /* Bootstrap's btn-warning color */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8em;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.btn-edit:hover {
+    background-color: #ec971f; /* Darken the button slightly on hover */
+    color: white;
+}
+
+/* Responsive Design: On small screens, the 'Go' and 'Login' buttons stack vertically */
+@media screen and (max-width: 600px) {
+    .search-and-buttons {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-and-buttons button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+.btn-logout:hover {
+    background-color: red; /* Change to your preferred shade of red */
+}
+
+.login-button {
+    background-color: #007BFF; /* Button background color */
+    border: none;
+    color: white; /* Button text color */
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Change background color on hover */
+}
+
+.btn-delete {
+    background-color: #f04e4e;
+}
+
+.btn-delete:hover {
+    background-color: #ec1f1f;
+}

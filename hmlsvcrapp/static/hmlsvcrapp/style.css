@@ -1,0 +1,211 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-menu {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #009879;
+    padding: 10px 50px;
+}
+
+.nav-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-menu ul li {
+    padding: 0 10px;
+}
+
+.nav-menu ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-menu ul li a:hover,
+.nav-menu ul li a.active {
+    background-color: #007961;
+}
+
+.login-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.login-form button {
+    padding: 10px 20px;
+    background-color: #009879;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login-form button:hover {
+    background-color: #007961;
+}
+
+.blur, .tcent, .button-group, .inline-form, .btn-delete, .btn-decom, .login-prompt-container, .login-message, .login-button {
+    /* Consolidated repeated styles */
+}
+
+.btn-delete, .btn-delete:hover, .btn-decom, .btn-decom:hover {
+    /* Consolidated repeated styles for buttons */
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+    margin: auto;
+    padding: 20px;
+}
+
+table {
+    width: auto;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #009879;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Buttons and Actions */
+.btn-edit, .btn-edit:hover, .btn-logout:hover, .login-button, .login-button:hover {
+    /* Button styles */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    .search-and-buttons {
+        display: flex;
+        flex-direction: column;
+    }
+    .search-and-buttons button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+.button-group {
+    justify-content: left; /* Center button group in the cell */
+}
+
+.btn-delete {
+    background-color: #f04e4e;
+}
+
+.btn-delete:hover {
+    background-color: darkred;
+}
+
+.btn-decom {
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8em;
+    margin: 0 5px; /* Adjusted margin for spacing */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.btn-decom {
+    background-color: #blue;
+}
+
+.btn-decom:hover {
+    background-color: darkblue;
+}
+
+#message-container {
+    position: fixed;
+    top: 150px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px;
+    display: none; /* Initially hidden */
+    opacity: 0; /* Start with 0 opacity */
+    transition: opacity 0.5s; /* Smooth transition for the fade-in effect */
+    color: white; /* White text color */
+}
+
+.message.success {
+    background-color: #006400; /* Dark green background */
+    border-left: 5px solid #008000; /* Green border */
+}
+
+.message.error {
+    background-color: #8b0000; /* Dark red background */
+    border-left: 5px solid #ff0000; /* Red border */
+}

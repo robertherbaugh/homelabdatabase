@@ -1,0 +1,86 @@
+{% if request.user.is_authenticated %}
+    <style>
+        .footer-sub-menu {
+            display: flex;  /* Use flexbox to align items */
+            justify-content: center;  /* Center items horizontally */
+            align-items: center; /* Center items vertically */
+            padding: 10px 0; /* Add 20px padding to the top and bottom */
+            flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+        }
+
+        .admin-level {
+            text-align: right; /* Push everything else to the right */
+            padding: 0%;
+        }
+
+        .btn-edit-footer {
+            background-color: #614ef0; /* Bootstrap's btn-warning color */
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.8em;
+            margin: 4px 5px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+
+        .btn-edit-footer:hover {
+            background-color: #631fec; /* Darken the button slightly on hover */
+            color: white;
+        }
+
+        #message-container {
+            position: fixed;
+            top: 150px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .message {
+            background-color: #dfdfdf;
+            border-left: 5px solid #4CAF50; /* Example for success messages */
+            margin-bottom: 15px;
+            padding: 10px;
+            display: none; /* Initially hidden */
+            opacity: 0; /* Start with 0 opacity */
+            transition: opacity 0.5s; /* Smooth transition for the fade-in effect */
+        }
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const messages = document.querySelectorAll('.message');
+            let delay = 0;
+
+            messages.forEach((msg, index) => {
+                setTimeout(() => {
+                    // Fade in
+                    msg.style.display = 'block';
+                    setTimeout(() => msg.style.opacity = 1, 10); // Trigger fade in
+                    
+                    // Fade out after 5 seconds
+                    setTimeout(() => {
+                        msg.style.opacity = 0;
+                        msg.addEventListener('transitionend', () => msg.style.display = 'none');
+                    }, 5000);
+                }, delay);
+
+                delay += 500; // This will stagger the appearance of messages if there are multiple
+            });
+        });
+    </script>
+    <div class="footer-sub-menu">
+        <button class="btn btn-edit-footer" onclick="window.location.href = '{% url 'add_network' %}'">Add New Network</button>
+        <button class="btn btn-edit-footer" onclick="window.location.href = '{% url 'add_server' %}'">Add New Server</button>
+        <button class="btn btn-edit-footer" onclick="window.location.href = '{% url 'add_service' %}'">Add New Service</button>
+        <button class="btn btn-edit-footer" onclick="window.location.href = '{% url 'add_credential' %}'">Add New Credentials</button>
+        {% if current_page != 'users' %}
+            <button class="btn btn-edit-footer" onclick="window.location.href = '{% url 'add_user' %}'">Add New App User</button>
+        {% endif %}
+
+    </div>
+    
+{% endif %}

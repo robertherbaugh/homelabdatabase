@@ -1,0 +1,61 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+    width: 600px; /* Adjust width as needed */
+}
+.form-container {
+    width: 100%;
+    display: flex;
+}
+.column {
+    flex: 1; /* Equal width for both columns */
+    padding: 0 15px; /* Space between columns */
+}
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.button-container {
+    width: 100%; /* This will now span the full width of the form-container */
+    display: flex;
+    justify-content: center; /* Center the button */
+    padding-top: 20px; /* Add some space above the button */
+}
+button {
+    padding: 10px 20px;
+    background-color: #5fbae9;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    /* Remove the width property to allow button to size to content */
+}
+button:hover {
+    background-color: #4aa8d8;
+}

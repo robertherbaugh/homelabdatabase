@@ -1,0 +1,170 @@
+<style>
+   .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 1; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0,0,0); 
+        background-color: rgba(0,0,0,0.4); 
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto; /* Center horizontally */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%; /* Adjust to the content */
+        max-width: auto; /* Optional: Set a maximum width if needed */
+        position: relative;
+        top: 50%; /* Center vertically */
+        transform: translateY(-50%); /* Center vertically */
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .network-link {
+        text-decoration: underline; /* Removes the default underline */
+        color: #0077cc; /* Sets the link color to blue, you can change the color code as needed */
+    }
+
+    .server-link {
+        text-decoration: underline; /* Removes the default underline */
+        color: #0077cc; /* Sets the link color to blue, you can change the color code as needed */
+    }
+</style>
+
+<div id="networkModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Network Details:</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>VLAN ID</th>
+                <th>IP Space</th>
+                <th>Subnet Mask</th>
+            </tr>
+            <tr>
+                <td id="networkName">Loading...</td>
+                <td id="networkVlanId">Loading...</td>
+                <td id="networkIpSpace">Loading...</td>
+                <td id="networkSubnetMask">Loading...</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="serverModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Server Details:</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>IP Address</th>
+                <th>Server Type</th>
+                <th>Server Network</th>
+                <th>Location</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td id="serverName">Loading...</td>
+                <td id="serverIpAddress">Loading...</td>
+                <td id="serverType">Loading...</td>
+                <td id="serverNetwork">Loading...</td>
+                <td id="serverLocation">Loading...</td>
+                <td id="serverDescription">Loading...</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    // Variables for the network modal
+    var networkModal = document.getElementById("networkModal");
+    var networkSpan = networkModal.getElementsByClassName("close")[0];
+
+    // Variables for the server modal
+    var serverModal = document.getElementById("serverModal");
+    var serverSpan = serverModal.getElementsByClassName("close")[0];
+
+    // Handling network links
+    document.querySelectorAll('.network-link').forEach(item => {
+        item.addEventListener('click', event => {
+            var networkId = item.getAttribute('data-network-id');
+            networkModal.style.display = "block";
+
+            // AJAX call for network details
+            fetch(`/hmlsvcrapp/get-network-details/${networkId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('networkName').textContent = data.name;
+                    document.getElementById('networkVlanId').textContent = data.vlan_id;
+                    document.getElementById('networkIpSpace').textContent = data.ip_space;
+                    document.getElementById('networkSubnetMask').textContent = data.subnet_mask;
+                })
+                .catch(error => {
+                    console.error('Error fetching network details:', error);
+                });
+        });
+    });
+
+    // Handling server links
+    document.querySelectorAll('.server-link').forEach(item => {
+        item.addEventListener('click', event => {
+            var serverId = item.getAttribute('data-server-id');
+            serverModal.style.display = "block";
+
+            // AJAX call for server details
+            fetch(`/hmlsvcrapp/get-server-details/${serverId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('serverName').textContent = data.name;
+                    document.getElementById('serverIpAddress').textContent = data.ip_address;
+                    document.getElementById('serverType').textContent = data.type;
+                    document.getElementById('serverNetwork').textContent = data.network;
+                    document.getElementById('serverLocation').textContent = data.location;
+                    document.getElementById('serverDescription').textContent = data.description;
+                })
+                .catch(error => {
+                    console.error('Error fetching server details:', error);
+                });
+        });
+    });
+
+    // Close functionality for network modal
+    networkSpan.onclick = function() {
+        networkModal.style.display = "none";
+    };
+
+    // Close functionality for server modal
+    serverSpan.onclick = function() {
+        serverModal.style.display = "none";
+    };
+
+    // Close modals when clicking outside of them
+    window.onclick = function(event) {
+        if (event.target == networkModal) {
+            networkModal.style.display = "none";
+        } else if (event.target == serverModal) {
+            serverModal.style.display = "none";
+        }
+    };
+</script>

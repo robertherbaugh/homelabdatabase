@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HomeLab Databse Home</title>
+    <!-- Add any additional head elements here -->
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'hmlsvcrapp/styles.css' %}">-->
+    <link rel="stylesheet" type="text/css" href="{% static 'hmlsvcrapp/tables.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'hmlsvcrapp/buttons.css' %}">
+</head>
+<body>
+
+    <!-- Links to other pages -->
+    {% include 'hmlsvcrapp/_menu.html' %}
+
+    <br>
+    <h1 style="text-align: center;">Welcome to the HomeLab Database Application</h1>
+    <br>
+
+    <!-- Embedding the website in an iframe -->
+    <h3 style="text-align: center;">Current Status</h3>
+    <!--<iframe src="http://10.10.151.4:3001/status/herbaughmanor" width="800" height="400"></iframe>-->
+
+    <table class="table-container">
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- You can add rows here using a loop or manually -->
+            <tr>
+                <td>Network Stack</td>
+                <td><img src="http://10.10.151.4:3001/api/badge/1/status?style=flat-square" alt="Status Badge"></td>
+            </tr>
+            <tr>
+                <td>Virtualization Stack</td>
+                <td><img src="http://10.10.151.4:3001/api/badge/6/status?style=flat-square" alt="Status Badge"></td>
+            </tr>
+            <tr>
+                <td>Critical Application Stack</td>
+                <td><img src="http://10.10.151.4:3001/api/badge/18/status?style=flat-square" alt="Status Badge"></td>
+            </tr>
+            <tr>
+                <td>Application Stack</td>
+                <td><img src="http://10.10.151.4:3001/api/badge/20/status?style=flat-square" alt="Status Badge"></td>
+            </tr>
+            <tr>
+                <td>Docker Stack</td>
+                <td><img src="http://10.10.151.4:3001/api/badge/22/status?style=flat-square" alt="Status Badge"></td>
+            </tr>
+            <tr>
+                <td>iDRAC</td>
+                <td><img src="http://10.10.151.4:3001/api/badge/12/status?style=flat-square" alt="Status Badge"></td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+
+    <!-- Add additional content or scripts here -->
+</body>
+</html>

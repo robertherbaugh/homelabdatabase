@@ -1,0 +1,126 @@
+.button-container {
+    width: 100%; /* Full width of the form-container */
+    display: flex;
+    justify-content: center; /* Center the button */
+    padding-top: 20px; /* Space above the button */
+}
+
+button, 
+.btn-delete, 
+.btn-decom, 
+.btn-edit-footer, 
+.btn-nav,
+.user-info button,
+.user-actions button {
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 5px; /* Consistent margin */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+button {
+    background-color: #5fbae9;
+}
+
+button:hover {
+    background-color: #4aa8d8;
+}
+
+.btn-delete {
+    background-color: #f04e4e;
+}
+
+.btn-delete:hover {
+    background-color: darkred;
+}
+
+.btn-decom {
+    background-color: blue; /* Corrected from '#blue' to 'blue' */
+}
+
+.btn-decom:hover {
+    background-color: darkblue;
+}
+
+.btn-edit-footer {
+    background-color: #614ef0; /* Bootstrap's btn-warning color */
+}
+
+.btn-edit-footer:hover {
+    background-color: #631fec; /* Darken the button slightly on hover */
+}
+
+.btn-nav {
+    background-color: #009879; /* Bootstrap's btn-warning color */
+    font-size: 1em;
+}
+
+.btn-nav:hover, 
+.active {
+    background-color: #007961; /* Darken the button slightly on hover */
+}
+
+.user-info button {
+    background-color: red;
+    border-radius: 5px;
+}
+
+.user-info button:hover {
+    background-color: darkred;
+}
+
+.user-actions button {
+    background-color: #f44336; /* Red background */
+    padding: 10px 20px; /* Larger padding */
+    border-radius: 4px; /* Rounded corners */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    font-size: 16px; /* Larger font size */
+    letter-spacing: 1px; /* Spacing between letters */
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2); /* Shadow for depth */
+}
+
+.user-actions button:hover {
+    background-color: #d32f2f; /* Darker shade of red on hover */
+}
+
+.btn-logout2 {
+    background-color: red; /* Shade of red */
+}
+
+.button-group,
+.inline-form {
+    justify-content: left; /* Center button group in the cell */
+}
+
+.inline-form {
+    display: inline;
+    margin-left: 10px; /* Space between buttons */
+}
+
+.blur {
+    color: transparent;
+    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
+
+.btn-promote {
+    background-color: lightblue; /* Light blue background for Promote button */
+}
+
+.btn-promote:hover {
+    background-color: #82c5e6; /* Slightly darker blue on hover */
+}
+
+.btn-demote {
+    background-color: red; /* Red background for Demote button */
+}
+
+.btn-demote:hover {
+    background-color: #cc0000; /* Slightly darker red on hover */
+}
