@@ -2,6 +2,8 @@
 
 Welcome to HomeLab Database, a web application designed to help you organize and manage your home network infrastructure. This project represents my first foray into creating a Dockerized application, as well as my initial exploration into Continuous Integration and Continuous Deployment (CI/CD) practices. Built with Django and MySQL, this application serves as a central repository to keep track of Networks, Servers, Services, and Credentials securely.
 
+Read more at my blog post on this project here: [https://robertherbaugh.me/blog](https://robertherbaugh.me/from-spreadsheets-to-scalability-revolutionizing-homelab-management-with-django-mysql-and-docker)
+
 ## Key Features
 
 - **Framework & Database**: Utilizes Django for the web framework and MySQL for data persistence.
