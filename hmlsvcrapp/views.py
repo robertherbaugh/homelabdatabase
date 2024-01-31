@@ -41,7 +41,7 @@ def credential_list(request):
 
 def list_monitors(request):
     monitors = UptimeKumaMonitors.objects.all()
-    return render(request, 'monitors_list.html', {'monitors': monitors})
+    return render(request, 'hmlsvcrapp/monitors_list.html', {'monitors': monitors})
 
 # Network Manipulation
 @login_required
