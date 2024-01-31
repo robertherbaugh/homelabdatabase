@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Server, Service, Network, Credential
+from .models import Server, Service, Network, Credential, UptimeKumaMonitors
 from django.contrib.admin import AdminSite
 
 admin.site.register(Server)
