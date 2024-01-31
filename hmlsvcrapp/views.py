@@ -16,7 +16,7 @@ from django.core.exceptions import PermissionDenied
 
 def index(request):
     monitors = UptimeKumaMonitors.objects.all()
-    return render(request, 'hmlsvcrapp/index.html', {'current_page': 'home'})
+    return render(request, 'hmlsvcrapp/index.html', {'monitors': monitors, 'current_page': 'home'})
 
 def server_list(request):
     servers = Server.objects.all().prefetch_related('cred_name')
