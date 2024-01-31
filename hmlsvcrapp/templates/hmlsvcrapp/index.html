@@ -17,9 +17,7 @@
     <h1 style="text-align: center;">Welcome to the HomeLab Database Application</h1>
     <br>
 
-    <!-- Embedding the website in an iframe -->
     <h3 style="text-align: center;">Current Status</h3>
-    <!--<iframe src="http://10.10.151.4:3001/status/herbaughmanor" width="800" height="400"></iframe>-->
 
     <table class="table-container">
         <thead>
@@ -39,8 +37,8 @@
                     <td colspan="2">No monitors found.</td>
                 </tr>
             {% endfor %}
-
         </tbody>
+        {{ monitors }}
     </table>
 
     <!-- Add additional content or scripts here -->

@@ -1,10 +1,10 @@
 {% for monitor in monitors %}
-    <tr>
-        <td>{{ monitor.name }}</td>
-        <td>{{ monitor.url }}</td>
-    </tr>
-{% empty %}
-    <tr>
-        <td colspan="2">No monitors found.</td>
-    </tr>
-{% endfor %}
+                <tr>
+                    <td>{{ monitor.name }}</td>
+                    <td><img src="{{ monitor.url }}" alt="{{ monitor.name }} Status Badge"></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No monitors found.</td>
+                </tr>
+            {% endfor %}
