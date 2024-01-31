@@ -6,6 +6,7 @@ admin.site.register(Server)
 admin.site.register(Service)
 admin.site.register(Network)
 admin.site.register(Credential)
+admin.site.register(UptimeKumaMonitors)
 
 class MyAdminSite(AdminSite):
     def has_permission(self, request):
