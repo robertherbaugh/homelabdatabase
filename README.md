@@ -25,8 +25,8 @@ services:
     environment:
       MYSQL_DATABASE: 'hmlsvcrapp'
       MYSQL_USER: 'hmlsvcrapp'
-      MYSQL_PASSWORD: 'hmlsvcrapp-password!'
-      MYSQL_ROOT_PASSWORD: 'hmlsvcrapp-password!-root'
+      MYSQL_PASSWORD: 'default_password' #change for security
+      MYSQL_ROOT_PASSWORD: 'hmlsvcrapp-password!-root' #change for security
     volumes:
       - mysql_data:/var/lib/mysql
       - /createdatabase.sql:/docker-entrypoint-initdb.d
@@ -41,11 +41,14 @@ services:
       - db
     environment:
       - DEBUG=1
-      - DJANGO_SUPERUSER_USERNAME=admin
-      - DJANGO_SUPERUSER_EMAIL=admin@example.com
-      - DJANGO_SUPERUSER_PASSWORD=adminpassword
+      - DB_PASSWORD=default_password #match the MySQL Password above
+      - DJANGO_SUPERUSER_USERNAME=admin #update this if required
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com #update this field
+      - DJANGO_SUPERUSER_PASSWORD=adminpassword #change for security
     command: >
       sh -c "sleep 60 &&
+         python manage.py makemigrations &&
+         python manage.py migrate &&
          python create_superuser.py &&
          python manage.py makemigrations &&
          python manage.py migrate &&
