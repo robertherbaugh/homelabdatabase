@@ -29,15 +29,17 @@
             </tr>
         </thead>
         <tbody>
-            <!-- You can add rows here using a loop or manually -->
-            <!-- You can levarage the badges from UptimeKuma as rows to see the status of your services/server. A sample is below -->
-            <tr>
-                <td>Monitor Name</td>
-                <td><img src="http://localhost/api/badge/1/status?style=flat-square" alt="Status Badge"></td>
-            </tr>
-            
-            </tr>
-            <!-- Add more rows as needed -->
+            {% for UptimeKumaMonitors in UptimeKumaMonitors %}
+                <!-- You can add rows here using a loop or manually -->
+                <tr>
+                    <td>{{ uptimekumamonitors.name }}</td>
+                    <td>{{ uptimekumamonitors.url }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No monitors found.</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
