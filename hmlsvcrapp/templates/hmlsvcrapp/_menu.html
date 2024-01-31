@@ -1,0 +1,163 @@
+<!-- hmlsvcrapp/templates/hmlsvcrapp/_menu.html -->
+{% include 'hmlsvcrapp/_messages.html' %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+/* Navigation Menu Styles */
+.header-container {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #009879;
+    padding: 10px 50px;
+}
+.header-title {
+    flex: 1;
+    color: white;
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.nav-menu {
+    background-color: #009879;
+    display: flex;  /* Use flexbox to align items */
+    justify-content: center;  /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    padding: 10 0; /* Add 20px padding to the top and bottom */
+    flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+}
+
+.btn-nav {
+    background-color: #009879; /* Bootstrap's btn-warning color */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 4px 5px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.btn-nav:hover {
+    background-color: #007961; /* Darken the button slightly on hover */
+    color: white;
+}
+.active {
+    background-color: #006b79; /* Darken the button slightly on hover */
+    color: white;
+}
+
+.user-info {
+    flex: 1;
+    text-align: right;
+    color: white;
+}
+.user-info button {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.user-info button:hover {
+    background-color: darkred;
+}
+
+.user-info p {
+    /* Styles for the paragraph containing the welcome message */
+    margin-bottom: 10px; /* Adjust space between text and buttons */
+}
+
+.user-info a {
+    color: white;
+}
+
+.user-info a:hover {
+    color: darkblue;
+}
+
+.user-actions {
+    display: flex;
+    gap: 10px; /* Adjust the space between buttons */
+}
+
+.user-actions button {
+    background-color: #f44336; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Top and bottom padding 10px, left and right padding 20px */
+    border-radius: 4px; /* Rounded corners, 4px radius */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    font-size: 16px; /* Font size */
+    letter-spacing: 1px; /* Spacing between letters */
+    outline: none; /* Remove outline */
+    cursor: pointer; /* Cursor appears as pointer on hover */
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2); /* Add shadow for depth */
+    transition: background-color 0.3s ease; /* Transition for the background color */
+}
+
+.user-actions button:hover {
+    background-color: #d32f2f; /* Darker shade of red on hover */
+}
+
+
+.btn-logout2 {
+    background-color: red; /* Change to your preferred shade of red */
+}
+
+
+</style>
+
+<div class="header-container">
+    {% if current_page ==  'home' %}
+        <h1 class="header-title">Homelab Database</h1>
+    {% else %}
+        <h1 class="header-title">Homelab Database >> {{ current_page }}</h1>
+    {% endif %}
+    <div class="nav-menu">
+        {% if current_page != 'home' %}
+            <button onclick="location.href='{% url 'index' %}'" class="btn btn-nav">Home</button>
+        {% endif %}
+        <button onclick="location.href='{% url 'network_list' %}'" class="btn btn-nav {% if current_page == 'Networks' %}active{% endif %}">Networks</button>
+        <button onclick="location.href='{% url 'server_list' %}'" class="btn btn-nav {% if current_page == 'Servers' %}active{% endif %}">Servers</button>
+        <button onclick="location.href='{% url 'service_list' %}'" class="btn btn-nav {% if current_page == 'Services' %}active{% endif %}">Services</button>
+        <button onclick="location.href='{% url 'credential_list' %}'" class="btn btn-nav {% if current_page == 'Credentials' %}active{% endif %}">Credentials</button>
+    </div>
+    <div class="user-info">
+        {% if request.user.is_authenticated %}
+            <p>Welcome, <a href="{% url 'edit_user_profile' %}">{% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %}</a>! | Admin Level: 
+                {% if request.user.is_superuser %}
+                    Super User
+                {% elif request.user.is_staff %}
+                    Staff
+                {% else %}
+                    User
+                {% endif %}
+            </p>
+            <div>
+                {% if request.user.is_staff or request.user.is_superuser %}
+                    <button onclick="location.href='{% url 'user_list' %}'" class="btn btn-nav">User Admin Panel</button>
+                {% endif %}
+                <!-- Conditionally display Super User Status -->
+                {% if request.user.is_superuser %}
+                    <button onclick="window.open('{% url 'admin:index' %}', '_blank')" class="btn btn-nav">Django Admin</button>
+                {% endif %}
+                <button onclick="location.href='{% url 'logout' %}'" class="btn btn-nav">Logout</button>
+            </div>
+        {% else %}
+            <button onclick="location.href='{% url 'login' %}'" class="btn btn-primary">Login</button>
+        {% endif %}
+    </div>        
+</div>

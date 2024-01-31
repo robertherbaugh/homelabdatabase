@@ -1,0 +1,76 @@
+<style>
+    .notification-container {
+    position: relative;
+    }
+
+    .notification-bell {
+        cursor: pointer;
+        /* Style your bell icon */
+    }
+
+    .notification-count {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: red;
+        border-radius: 50%;
+        color: white;
+        padding: 2px 5px;
+        font-size: 0.8em;
+    }
+
+    .notification-menu {
+        position: absolute;
+        background-color: white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        top: 100%;
+        right: 0;
+        z-index: 1000;
+    }
+
+    .notification-item {
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .notification-item:last-child {
+        border-bottom: none;
+    }
+
+    .notification-item.success {
+        background-color: #e0ffe0;
+    }
+
+    .notification-item.error {
+        background-color: #ffe0e0;
+    }
+</style>
+
+<script>
+    function toggleNotifications() {
+        var menu = document.getElementById('notificationMenu');
+        if (menu.style.display === 'none') {
+            menu.style.display = 'block';
+        } else {
+            menu.style.display = 'none';
+        }
+    }  
+</script>
+
+<div class="notification-container">
+    <div class="notification-bell" onclick="toggleNotifications()">
+        <!--<img src="path_to_bell_icon.png" alt="Notifications">-->
+        Notifications
+        {% if messages %}
+            <span class="notification-count">{{ messages|length }}</span>
+        {% endif %}
+    </div>
+    <div class="notification-menu" id="notificationMenu" style="display: none;">
+        {% for message in messages %}
+            <div class="notification-item {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+</div>

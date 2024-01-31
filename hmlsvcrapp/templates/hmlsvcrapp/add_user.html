@@ -1,0 +1,59 @@
+{% if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New User</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'hmlsvcrapp/formstyles.css' %}">
+</head>
+<body>
+    <form method="post" class="container">
+        {% csrf_token %}
+        <h1>Add New User</h1>
+        <div>
+            {{ form.as_p }}
+            <button type="submit">Create User</button>
+        </div>
+    </form>
+</body>
+</html>
+{% else %}
+{% include 'hmlsvcrapp/_menu.html' %}
+<style>
+    .login-prompt-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+    }
+    
+    .login-message {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .login-button {
+        display: inline-block;
+        background-color: #009879;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    
+    .login-button:hover {
+        background-color: #007961;
+    }
+    
+    </style>
+        <div class="login-prompt-container">
+            <p><h1>&#128273; <!-- Emoji for red x -->[RESTRICTED]</h1></p>
+            <p><h3>You do not have permissions to view this page</h3></p>
+        </div>
+{% endif %}

@@ -1,0 +1,50 @@
+{% include 'hmlsvcrapp/_messages.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'hmlsvcrapp/formstyles.css' %}">
+</head>
+<body>
+    {% if not user_to_edit.is_superuser or request.user.is_superuser %}
+        <form method="post" class="container">
+            {% csrf_token %}
+            <h1>Edit Profile</h1>
+            <h4> Username: {{ user_to_edit.username }}</h4>
+            <div class="form-container">
+                <div class="column">
+                    <p>{{ form.first_name.label_tag }}<br>{{ form.first_name }}<br>{{ form.first_name.errors }}</p>
+                    <p>{{ form.last_name.label_tag }}<br>{{ form.last_name }}<br>{{ form.last_name.errors }}</p>
+                    <p>{{ form.email.label_tag }}<br>{{ form.email }}<br>{{ form.email.errors }}</p>
+                    
+                    {% if request.user.is_superuser %}
+                        <p>{{ form.is_superuser.label_tag }}<br>{{ form.is_superuser }}<br>{{ form.is_superuser.errors }}</p>
+                        <p>{{ form.is_staff.label_tag }}<br>{{ form.is_staff }}<br>{{ form.is_staff.errors }}</p>
+                        <p>{{ form.is_active.label_tag }}<br>{{ form.is_active }}<br>{{ form.is_active.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="column">
+                    <p>Change Password:</p>
+                    <p><a href="{% url 'password_change' %}">Change Password</a></p>
+                    {% if request.user.is_superuser %}
+                        <p>{{ form.username.label_tag }}<br>{{ form.username }}<br>{{ form.username.errors }}</p>
+                        <p>{{ form.groups.label_tag }}<br>{{ form.groups }}<br>{{ form.groups.errors }}</p>
+                        <p>{{ form.user_permissions.label_tag }}<br>{{ form.user_permissions }}<br>{{ form.user_permissions.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% if request.user.is_superuser or request.user.is_staff or request.user == user_to_edit %}
+                <button type="submit">Save changes</button>
+            {% endif %}
+        </form>
+    {% else %}
+        <div class="container">
+            <h1>Access Denied</h1>
+            <p>You are not authorized to modify a super user.</p>
+        </div>
+    {% endif %}
+</body>
+</html>

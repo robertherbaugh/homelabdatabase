@@ -1,0 +1,97 @@
+<style>
+    #message-container {
+        position: fixed;
+        top: 150px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .message {
+        margin-bottom: 15px;
+        padding: 10px;
+        display: none; /* Initially hidden */
+        opacity: 0; /* Start with 0 opacity */
+        transition: opacity 0.5s; /* Smooth transition for the fade-in effect */
+        color: white; /* White text color */
+    }
+
+    .message.success {
+        background-color: #006400; /* Dark green background */
+        border-left: 5px solid #008000; /* Green border */
+    }
+
+    .message.error {
+        background-color: #8b0000; /* Dark red background */
+        border-left: 5px solid #ff0000; /* Red border */
+    }
+</style>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+            const messages = document.querySelectorAll('.message');
+            let delay = 0;
+
+            messages.forEach((msg, index) => {
+                setTimeout(() => {
+                    // Fade in
+                    msg.style.display = 'block';
+                    setTimeout(() => msg.style.opacity = 1, 10); // Trigger fade in
+                    
+                    // Fade out after 5 seconds
+                    setTimeout(() => {
+                        msg.style.opacity = 0;
+                        msg.addEventListener('transitionend', () => msg.style.display = 'none');
+                    }, 5000);
+                }, delay);
+
+                delay += 500; // This will stagger the appearance of messages if there are multiple
+            });
+        });
+</script>
+{% if messages %}
+    <div id="message-container">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<script>
+    // When the user clicks on the link, open the modal
+    var modal = document.getElementById("networkModal");
+    var span = document.getElementsByClassName("close")[0];
+
+    document.querySelectorAll('.network-link').forEach(item => {
+        item.addEventListener('click', event => {
+
+            // Display the modal
+            modal.style.display = "block";
+
+            var networkId = item.getAttribute('data-network-id');
+
+            // AJAX call to get network details
+            fetch(`/get-network-details/${networkId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Update modal content with network details
+                    document.querySelector('#networkModal .modal-content p').innerHTML = 
+                        `Name: ${data.name}<br>VLAN ID: ${data.vlan_id}`;
+                    
+                })
+                .catch(error => {
+                    console.error('Error fetching network details:', error);
+                });
+        })
+    });
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
