@@ -1,26 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .models import Server, Service, Network, Credential, UptimeKumaMonitors
-from .forms import NetworkForm, ServiceForm, ServerForm, CredentialForm, UserProfileForm, CustomUserChangeForm, CustomUserCreationForm
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
-from django.contrib.auth.models import User 
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
-from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views import generic, View
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
+from .models import Server, Service, Network, Credential, UptimeKumaMonitors
+from .forms import NetworkForm, ServiceForm, ServerForm, CredentialForm, UserProfileForm, CustomUserChangeForm, CustomUserCreationForm
 from django.contrib.auth import authenticate
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views import generic
-from django.contrib.auth.forms import SetPasswordForm
-from django.contrib.auth.models import User
-from django.urls import reverse_lazy
+from django.core.exceptions import PermissionDenied
+
 
 def index(request):
+    monitors = UptimeKumaMonitors.objects.all()
     return render(request, 'hmlsvcrapp/index.html', {'current_page': 'home'})
 
 def server_list(request):
