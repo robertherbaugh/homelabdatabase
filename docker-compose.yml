@@ -28,6 +28,8 @@ services:
       - DJANGO_SUPERUSER_PASSWORD=adminpassword #change for security
     command: >
       sh -c "sleep 60 &&
+         python manage.py makemigrations &&
+         python manage.py migrate &&
          python create_superuser.py &&
          python manage.py makemigrations &&
          python manage.py migrate &&
