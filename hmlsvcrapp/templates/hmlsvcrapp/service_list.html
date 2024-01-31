@@ -96,15 +96,11 @@
                     </td>
                     <td>
                         {% if service.dns_configured %}
-                            {% if service.reverse_proxy_configured %}
-                                <a href="https://{{ service.fqdn }}" target="_blank">https://{{ service.fqdn }}</a>
-                            {% else %}
-                                {% if service.https_enabled %}
-                                    <a href="https://{{ service.fqdn }}{% if service.port != 443 %}:{{ service.port }}{% endif %}" target="_blank">https://{{ service.fqdn }}</a>
-                                {% else %}
-                                    <a href="http://{{ service.fqdn }}{% if service.port != 80 %}:{{ service.port }}{% endif %}" target="_blank">http://{{ service.fqdn }}</a>
-                                {% endif %}
-                            {% endif %}
+                            {% with protocol='https://' if service.https_enabled else 'http://' %}
+                                {% with port='' if service.reverse_proxy_configured or service.port in [80, 443] else ':'|add:service.port|stringformat:"s" %}
+                                    <a href="{{ protocol }}{{ service.fqdn }}{{ port }}" target="_blank">{{ protocol }}{{ service.fqdn }}{{ port }}</a>
+                                {% endwith %}
+                            {% endwith %}
                         {% else %}
                             &#10060; <!-- Emoji for red x -->[DNS Not Configured]    &#10060; <!-- Emoji for red x -->
                         {% endif %}
@@ -112,13 +108,15 @@
                     <td>
                         {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser or request.user.is_staff %}
-                            <ol> 
-                                {% for credential in service.credentials.all %} 
-                                    <li>{{ credential.cred_name }}<br></li>
-                                {% empty %}
+                                {% if service.credentials.all %}
+                                    <ol>
+                                        {% for credential in service.credentials.all %}
+                                            <li>{{ credential.cred_name }}<br></li>
+                                        {% endfor %}
+                                    </ol>
+                                {% else %}
                                     <div>&#10060; [No credentials associated]</div>
-                                {% endfor %}
-                            </ol>
+                                {% endif %}
                             {% else %}
                                 &#128273; <!-- Emoji for key -->[RESTRICTED]
                             {% endif %}
@@ -129,13 +127,15 @@
                     <td>
                         {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser or request.user.is_staff %}
-                            <ol> 
-                                {% for credential in service.credentials.all %}
-                                    <li>{{ credential.username }}<br></li>
-                                {% empty %}
+                                {% if service.credentials.all %}
+                                    <ol>
+                                        {% for credential in service.credentials.all %}
+                                            <li>{{ credential.username }}<br></li>
+                                        {% endfor %}
+                                    </ol>
+                                {% else %}
                                     <div>&#10060; [No credentials associated]</div>
-                                {% endfor %}
-                            </ol>
+                                {% endif %}
                             {% else %}
                                 &#128273; <!-- Emoji for key -->[RESTRICTED]
                             {% endif %}
@@ -145,21 +145,22 @@
                     </td>
                     <td>
                         {% if request.user.is_authenticated %}
-                            {% if request.user.is_superuser or request.user.is_staff %}    
-                            <ol>
-                                {% for credential in service.credentials.all %}
-                                        <li>
-                                            <span class="blur" id="password-{{ service.id }}-{{ credential.id }}">{{ credential.password }}</span>
-                                            <button class="btn btn-edit" onclick="revealPassword('password-{{ service.id }}-{{ credential.id }}')">Reveal</button><br>
-                                        </li>
-                                {% empty %}
+                            {% if request.user.is_superuser or request.user.is_staff %}
+                                {% if service.credentials.all %}
+                                    <ol>
+                                        {% for credential in service.credentials.all %}
+                                            <li>
+                                                <span class="blur" id="password-{{ service.id }}-{{ credential.id }}">{{ credential.password }}</span>
+                                                <button class="btn btn-edit" onclick="revealPassword('password-{{ service.id }}-{{ credential.id }}')">Reveal</button><br>
+                                            </li>
+                                        {% endfor %}
+                                    </ol>
+                                {% else %}
                                     <div>&#10060; [No credentials associated]</div>
-                                {% endfor %}
-                            </ol>
+                                {% endif %}
                             {% else %}
                                 &#128273; <!-- Emoji for key -->[RESTRICTED]
                             {% endif %}
-                        
                         {% else %}
                             <div>&#x1F510; <!-- Emoji for closed lock with key -->[PROTECTED]</div>
                         {% endif %}
@@ -225,29 +226,15 @@
                         {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser or request.user.is_staff %}
                                 {% if service.reverse_proxy_configured %}
-                                    {% if service.ldn %}
-                                        {% if service.https_enabled %}
-                                            <a href="https://{{ service.ldn }}{% if service.port != 443 %}:{{ service.port }}{% endif %}" target="_blank">https://{{ service.ldn }}{% if service.port != 443 %}:{{ service.port }}{% endif %}</a>
-                                        {% else %}
-                                            <a href="http://{{ service.ldn }}{% if service.port != 80 %}:{{ service.port }}{% endif %}" target="_blank">http://{{ service.ldn }}{% if service.port != 80 %}:{{ service.port }}{% endif %}</a>
-                                        {% endif %}
-                                    {% else %}
-                                        {% if service.https_enabled %}
-                                            <a href="https://{{ service.ip }}{% if service.port != 443 %}:{{ service.port }}{% endif %}" target="_blank">https://{{ service.ip }}{% if service.port != 443 %}:{{ service.port }}{% endif %}</a>
-                                        {% else %}
-                                            <a href="http://{{ service.ip }}{% if service.port != 80 %}:{{ service.port }}{% endif %}" target="_blank">http://{{ service.ip }}{% if service.port != 80 %}:{{ service.port }}{% endif %}</a>
-                                        {% endif %}
-                                    {% endif %}
+                                    <a href="https://{{ service.ldn }}" target="_blank">https://{{ service.ldn }}</a>
                                 {% else %}
-                                    {% if service.dns_configured %}
-                                        <a href="http://{{ service.ldn }}{% if service.port != 80 %}:{{ service.port }}{% endif %}" target="_blank">http://{{ service.ldn }}{% if service.port != 80 %}:{{ service.port }}{% endif %}</a>
-                                    {% else %}
-                                        {% if service.https_enabled %}
-                                            <a href="https://{{ service.ip }}{% if service.port != 443 %}:{{ service.port }}{% endif %}" target="_blank">https://{{ service.ip }}{% if service.port != 443 %}:{{ service.port }}{% endif %}</a>
-                                        {% else %}
-                                            <a href="http://{{ service.ip }}{% if service.port != 80 %}:{{ service.port }}{% endif %}" target="_blank">http://{{ service.ip }}{% if service.port != 80 %}:{{ service.port }}{% endif %}</a>
-                                        {% endif %}
-                                    {% endif %}
+                                    {% with protocol='https://' if service.https_enabled else 'http://' %}
+                                        {% with domain=service.ldn if service.dns_configured else service.ip %}
+                                            {% with port='' if service.port in [80, 443] else ':'|add:service.port|stringformat:"s" %}
+                                                <a href="{{ protocol }}{{ domain }}{{ port }}" target="_blank">{{ protocol }}{{ domain }}{{ port }}</a>
+                                            {% endwith %}
+                                        {% endwith %}
+                                    {% endwith %}
                                 {% endif %}
                             {% else %}
                                 &#128273; <!-- Emoji for key -->[RESTRICTED]
