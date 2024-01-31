@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .models import Server, Service, Network, Credential
+from .models import Server, Service, Network, Credential, UptimeKumaMonitors
 from .forms import NetworkForm, ServiceForm, ServerForm, CredentialForm, UserProfileForm, CustomUserChangeForm, CustomUserCreationForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
@@ -38,6 +38,10 @@ def network_list(request):
 def credential_list(request):
     credentials = Credential.objects.prefetch_related('servercredential_set__server', 'servicecredential_set__service')
     return render(request, 'hmlsvcrapp/credential_list.html', {'credentials': credentials, 'current_page': 'Credentials'})
+
+def list_monitors(request):
+    monitors = UptimeKumaMonitors.objects.all()
+    return render(request, 'monitors_list.html', {'monitors': monitors})
 
 # Network Manipulation
 @login_required

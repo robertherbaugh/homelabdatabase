@@ -13,6 +13,7 @@ urlpatterns = [
     path('services/', views.service_list, name='service_list'),
     path('networks/', views.network_list, name='network_list'),
     path('credentials/', views.credential_list, name='credential_list'),
+    path('monitors/', views.list_monitors, name='list_monitors'),
     path('', views.index, name='index'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('', RedirectView.as_view(url='/hmlsvcrapp/', permanent=True)),
