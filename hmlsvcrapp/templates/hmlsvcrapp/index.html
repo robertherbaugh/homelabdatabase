@@ -29,11 +29,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for UptimeKumaMonitors in UptimeKumaMonitors %}
+            {% for monitor in UptimeKumaMonitors %}
                 <!-- You can add rows here using a loop or manually -->
                 <tr>
-                    <td>{{ uptimekumamonitors.name }}</td>
-                    <td>{{ uptimekumamonitors.url }}</td>
+                    <td>{{ monitor.name }}</td>
+                    <td>{{ monitor.url }}</td>
                 </tr>
             {% empty %}
                 <tr>
