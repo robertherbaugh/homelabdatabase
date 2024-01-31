@@ -165,30 +165,30 @@ def edit_server(request, server_id):
         form = ServerForm(instance=server)
     return render(request, 'hmlsvcrapp/edit_server.html', {'form': form})
 
-#@login_required
-#def delete_server(request, server_id):
-#    if request.user.has_perm('hmlsvcrapp.delete_server'):
-#        server = get_object_or_404(Server, pk=server_id)
-#        server.delete()
-#        messages.success(request, 'Server deleted successfully.')
-#        return redirect('server_list')
-#    else:
-#        messages.error(request, 'You do not have permission to delete this server.')
-#        return redirect('server_list')
-
 @login_required
 def delete_server(request, server_id):
-    if request.user.is_superuser or request.user.has_perm('hmlsvcrapp.delete_server'):
+    if request.user.has_perm('hmlsvcrapp.delete_server'):
         server = get_object_or_404(Server, pk=server_id)
-        server.is_active = not server.is_active  # Toggle the is_active status
-        server.save()
-
-        action = "reactivated" if server.is_active else "deactivated"
-        messages.success(request, f"The server with ID {server_id} has been {action}.")
+        server.delete()
+        messages.success(request, 'Server deleted successfully.')
         return redirect('server_list')
     else:
-        messages.error(request, 'You do not have permission to change this server\'s status.')
+        messages.error(request, 'You do not have permission to delete this server.')
         return redirect('server_list')
+
+#@login_required
+#def deactivate_server(request, server_id):
+#    if request.user.is_superuser or request.user.has_perm('hmlsvcrapp.edit_server'):
+#        server = get_object_or_404(Server, pk=server_id)
+#        server.is_active = not server.is_active  # Toggle the is_active status
+#        server.save()
+#
+#        action = "reactivated" if server.is_active else "deactivated"
+#        messages.success(request, f"The server with ID {server_id} has been {action}.")
+#        return redirect('server_list')
+#    else:
+#        messages.error(request, 'You do not have permission to change this server\'s status.')
+#        return redirect('server_list')
 
 # Credentials manipulation
 @login_required
