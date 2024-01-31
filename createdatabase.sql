@@ -79,3 +79,14 @@ CREATE TABLE ServerService (
     FOREIGN KEY (ServerID) REFERENCES Servers(ServerID),
     FOREIGN KEY (ServiceID) REFERENCES Services(ServiceID)
 );
+
+-- Create UptimeKuma Monitors Table
+CREATE TABLE UptimeKumaMonitors (
+    UptimeKumaMonitorID BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    ServiceID BIGINT UNSIGNED,
+    ServerID BIGINT UNSIGNED,
+    FOREIGN KEY (ServerID) REFERENCES Servers(ServerID),
+    FOREIGN KEY (ServiceID) REFERENCES Services(ServiceID)
+);
