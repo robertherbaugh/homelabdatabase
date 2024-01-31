@@ -57,7 +57,7 @@ class Server(models.Model):
     os = models.CharField(max_length=50, choices=OS_CHOICES)
     #credentials = models.ManyToManyField('Credential', related_name='servers', blank=True)
     cred_name = models.ForeignKey('Credential', on_delete=models.SET_NULL, null=True, blank=True, related_name='servers', to_field='cred_name')
-    uptimekumaurl = models.CharField(max_length=255, null=True, blank=True)
+    #uptimekumaurl = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -84,7 +84,7 @@ class Service(models.Model):
     credentials = models.ManyToManyField('Credential', related_name='services', blank=True)
     https_enabled = models.BooleanField(default=False)
     cred_name = models.ForeignKey('Credential', on_delete=models.SET_NULL, null=True, blank=True, related_name='services_name', to_field='cred_name')
-    uptimekumaurl = models.CharField(max_length=255, null=True, blank=True)
+    #uptimekumaurl = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
