@@ -251,7 +251,11 @@
                                                 <a href="https://{{ service.ip }}:{{ service.port }}" target="_blank">https://{{ service.ip }}:{{ service.port }}</a>
                                             {% endif %}
                                         {% else %} <!-- LDN is not available -->
-                                            <a href="https://{{ service.ip }}:{{ service.port }}" target="_blank">https://{{ service.ip }}:{{ service.port }}</a>
+                                            {% if service.port == 443 %} <!-- Standard HTTPS port -->
+                                                <a href="https://{{ service.ip }}" target="_blank">https://{{ service.ip }}</a>
+                                            {% else %} <!-- Non-standard HTTPS port -->
+                                                <a href="https://{{ service.ip }}:{{ service.port }}" target="_blank">https://{{ service.ip }}:{{ service.port }}</a>
+                                            {% endif %}
                                         {% endif %}
                                     {% else %} <!-- HTTPS is not enabled -->
                                         {% if service.ldn %} <!-- LDN is available -->
