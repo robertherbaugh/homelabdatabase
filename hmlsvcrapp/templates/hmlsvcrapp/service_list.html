@@ -100,7 +100,7 @@
                                 {% if service.https_enabled %} <!-- HTTPS is enabled -->
                                     {% if service.reverse_proxy_configured or service.port == 443 %} <!-- Reverse Proxy is configured or Port is 443 -->
                                         <a href="https://{{ service.fqdn }}" target="_blank">https://{{ service.fqdn }}</a>
-                                    {% else %}
+                                    {% elif service.port != 443 %} <!-- Reverse Proxy is not configured and Port is not 443 %} -->
                                         <a href="https://{{ service.fqdn }}:{{ service.port }}" target="_blank">https://{{ service.fqdn }}:{{ service.port }}</a>
                                     {% endif %}
                                 {% else %} <!-- HTTPS is not enabled -->
