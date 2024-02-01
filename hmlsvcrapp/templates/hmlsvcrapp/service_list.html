@@ -95,21 +95,21 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if service.dns_configured %}
-                            {% if service.https_enabled %}
-                                {% if service.reverse_proxy_configured or service.port == 80 or service.port == 443 %}
+                        {% if service.dns_configured %} <!-- DNS is configured -->
+                            {% if service.https_enabled %} <!-- HTTPS is enabled -->
+                                {% if service.reverse_proxy_configured or service.port == 443 %} <!-- Reverse Proxy is configured or Port is 443 -->
                                     <a href="https://{{ service.fqdn }}" target="_blank">https://{{ service.fqdn }}</a>
                                 {% else %}
                                     <a href="https://{{ service.fqdn }}:{{ service.port }}" target="_blank">https://{{ service.fqdn }}:{{ service.port }}</a>
                                 {% endif %}
-                            {% else %}
-                                {% if service.reverse_proxy_configured or service.port == 80 or service.port == 443 %}
+                            {% else %} <!-- HTTPS is not enabled -->
+                                {% if service.port == 80 %} <!-- Port is 80 -->
                                     <a href="http://{{ service.fqdn }}" target="_blank">http://{{ service.fqdn }}</a>
-                                {% else %}
+                                {% else %} <!-- Port is not 80 -->
                                     <a href="http://{{ service.fqdn }}:{{ service.port }}" target="_blank">http://{{ service.fqdn }}:{{ service.port }}</a>
                                 {% endif %}
                             {% endif %}
-                        {% else %}
+                        {% else %} 
                             &#10060; <!-- Emoji for red x -->[DNS Not Configured]    &#10060; <!-- Emoji for red x -->
                         {% endif %}
                     </td>
