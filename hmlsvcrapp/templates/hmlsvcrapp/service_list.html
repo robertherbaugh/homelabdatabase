@@ -98,17 +98,29 @@
                         {% if service.dns_configured %}
                             {% if service.https_enabled %}
                                 {% with protocol='https://' %}
-                            {% else %}
-                                {% with protocol='http://' %}
-                            {% endif %}
                                     {% if service.reverse_proxy_configured or service.port in [80, 443] %}
                                         {% with port='' %}
-                                    {% else %}
-                                        {% with port=':'|add:service.port|stringformat:"s" %}
-                                    {% endif %}
                                             <a href="{{ protocol }}{{ service.fqdn }}{{ port }}" target="_blank">{{ protocol }}{{ service.fqdn }}{{ port }}</a>
                                         {% endwith %}
+                                    {% else %}
+                                        {% with port=':'|add:service.port|stringformat:"s" %}
+                                            <a href="{{ protocol }}{{ service.fqdn }}{{ port }}" target="_blank">{{ protocol }}{{ service.fqdn }}{{ port }}</a>
+                                        {% endwith %}
+                                    {% endif %}
                                 {% endwith %}
+                            {% else %}
+                                {% with protocol='http://' %}
+                                    {% if service.reverse_proxy_configured or service.port in [80, 443] %}
+                                        {% with port='' %}
+                                            <a href="{{ protocol }}{{ service.fqdn }}{{ port }}" target="_blank">{{ protocol }}{{ service.fqdn }}{{ port }}</a>
+                                        {% endwith %}
+                                    {% else %}
+                                        {% with port=':'|add:service.port|stringformat:"s" %}
+                                            <a href="{{ protocol }}{{ service.fqdn }}{{ port }}" target="_blank">{{ protocol }}{{ service.fqdn }}{{ port }}</a>
+                                        {% endwith %}
+                                    {% endif %}
+                                {% endwith %}
+                            {% endif %}
                         {% else %}
                             &#10060; <!-- Emoji for red x -->[DNS Not Configured]    &#10060; <!-- Emoji for red x -->
                         {% endif %}
@@ -241,21 +253,22 @@
                                     {% else %}
                                         {% with protocol='http://' %}
                                     {% endif %}
-                                        {% if service.dns_configured %}
-                                            {% with domain=service.ldn %}
-                                        {% else %}
-                                            {% with domain=service.ip %}
-                                        {% endif %}
-                                            {% if service.port in [80, 443] %}
-                                                {% with port='' %}
+                                            {% if service.dns_configured %}
+                                                {% with domain=service.ldn %}
                                             {% else %}
-                                                {% with port=':'|add:service.port|stringformat:"s" %}
+                                                {% with domain=service.ip %}
                                             {% endif %}
-                                                    <a href="{{ protocol }}{{ domain }}{{ port }}" target="_blank">{{ protocol }}{{ domain }}{{ port }}</a>
+                                                    {% if service.reverse_proxy_configured or service.port in [80, 443] %}
+                                                        {% with port='' %}
+                                                            <a href="{{ protocol }}{{ domain }}{{ port }}" target="_blank">{{ protocol }}{{ domain }}{{ port }}</a>
+                                                        {% endwith %}
+                                                    {% else %}
+                                                        {% with port=':'|add:service.port|stringformat:"s" %}
+                                                            <a href="{{ protocol }}{{ domain }}{{ port }}" target="_blank">{{ protocol }}{{ domain }}{{ port }}</a>
+                                                        {% endwith %}
+                                                    {% endif %}
                                                 {% endwith %}
-                                            {% endwith %}
                                         {% endwith %}
-                                    {% endwith %}
                                 {% endif %}
                             {% else %}
                                 &#128273; <!-- Emoji for key -->[RESTRICTED]
@@ -263,6 +276,7 @@
                         {% else %}
                             &#x1F510; <!-- Emoji for closed lock with key -->[PROTECTED]
                         {% endif %}
+
 
                     </td>
                     <td>
