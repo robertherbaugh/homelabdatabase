@@ -96,11 +96,19 @@
                     </td>
                     <td>
                         {% if service.dns_configured %}
-                            {% with protocol='https://' if service.https_enabled else 'http://' %}
-                                {% with port='' if service.reverse_proxy_configured or service.port in [80, 443] else ':'|add:service.port|stringformat:"s" %}
-                                    <a href="{{ protocol }}{{ service.fqdn }}{{ port }}" target="_blank">{{ protocol }}{{ service.fqdn }}{{ port }}</a>
+                            {% if service.https_enabled %}
+                                {% with protocol='https://' %}
+                            {% else %}
+                                {% with protocol='http://' %}
+                            {% endif %}
+                                    {% if service.reverse_proxy_configured or service.port in [80, 443] %}
+                                        {% with port='' %}
+                                    {% else %}
+                                        {% with port=':'|add:service.port|stringformat:"s" %}
+                                    {% endif %}
+                                            <a href="{{ protocol }}{{ service.fqdn }}{{ port }}" target="_blank">{{ protocol }}{{ service.fqdn }}{{ port }}</a>
+                                        {% endwith %}
                                 {% endwith %}
-                            {% endwith %}
                         {% else %}
                             &#10060; <!-- Emoji for red x -->[DNS Not Configured]    &#10060; <!-- Emoji for red x -->
                         {% endif %}
@@ -228,10 +236,23 @@
                                 {% if service.reverse_proxy_configured %}
                                     <a href="https://{{ service.ldn }}" target="_blank">https://{{ service.ldn }}</a>
                                 {% else %}
-                                    {% with protocol='https://' if service.https_enabled else 'http://' %}
-                                        {% with domain=service.ldn if service.dns_configured else service.ip %}
-                                            {% with port='' if service.port in [80, 443] else ':'|add:service.port|stringformat:"s" %}
-                                                <a href="{{ protocol }}{{ domain }}{{ port }}" target="_blank">{{ protocol }}{{ domain }}{{ port }}</a>
+                                    {% if service.https_enabled %}
+                                        {% with protocol='https://' %}
+                                    {% else %}
+                                        {% with protocol='http://' %}
+                                    {% endif %}
+                                        {% if service.dns_configured %}
+                                            {% with domain=service.ldn %}
+                                        {% else %}
+                                            {% with domain=service.ip %}
+                                        {% endif %}
+                                            {% if service.port in [80, 443] %}
+                                                {% with port='' %}
+                                            {% else %}
+                                                {% with port=':'|add:service.port|stringformat:"s" %}
+                                            {% endif %}
+                                                    <a href="{{ protocol }}{{ domain }}{{ port }}" target="_blank">{{ protocol }}{{ domain }}{{ port }}</a>
+                                                {% endwith %}
                                             {% endwith %}
                                         {% endwith %}
                                     {% endwith %}
@@ -242,6 +263,7 @@
                         {% else %}
                             &#x1F510; <!-- Emoji for closed lock with key -->[PROTECTED]
                         {% endif %}
+
                     </td>
                     <td>
                         <div class="tcent">
