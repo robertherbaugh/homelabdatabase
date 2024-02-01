@@ -95,23 +95,28 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if service.dns_configured %} <!-- DNS is configured -->
-                            {% if service.https_enabled %} <!-- HTTPS is enabled -->
-                                {% if service.reverse_proxy_configured or service.port == 443 %} <!-- Reverse Proxy is configured or Port is 443 -->
-                                    <a href="https://{{ service.fqdn }}" target="_blank">https://{{ service.fqdn }}</a>
-                                {% else %}
-                                    <a href="https://{{ service.fqdn }}:{{ service.port }}" target="_blank">https://{{ service.fqdn }}:{{ service.port }}</a>
+                        {% if service.fqdn %} <!-- FQDN is available -->
+                            {% if service.dns_configured %} <!-- DNS is configured -->
+                                {% if service.https_enabled %} <!-- HTTPS is enabled -->
+                                    {% if service.reverse_proxy_configured or service.port == 443 %} <!-- Reverse Proxy is configured or Port is 443 -->
+                                        <a href="https://{{ service.fqdn }}" target="_blank">https://{{ service.fqdn }}</a>
+                                    {% else %}
+                                        <a href="https://{{ service.fqdn }}:{{ service.port }}" target="_blank">https://{{ service.fqdn }}:{{ service.port }}</a>
+                                    {% endif %}
+                                {% else %} <!-- HTTPS is not enabled -->
+                                    {% if service.port == 80 %} <!-- Port is 80 -->
+                                        <a href="http://{{ service.fqdn }}" target="_blank">http://{{ service.fqdn }}</a>
+                                    {% else %} <!-- Port is not 80 -->
+                                        <a href="http://{{ service.fqdn }}:{{ service.port }}" target="_blank">http://{{ service.fqdn }}:{{ service.port }}</a>
+                                    {% endif %}
                                 {% endif %}
-                            {% else %} <!-- HTTPS is not enabled -->
-                                {% if service.port == 80 %} <!-- Port is 80 -->
-                                    <a href="http://{{ service.fqdn }}" target="_blank">http://{{ service.fqdn }}</a>
-                                {% else %} <!-- Port is not 80 -->
-                                    <a href="http://{{ service.fqdn }}:{{ service.port }}" target="_blank">http://{{ service.fqdn }}:{{ service.port }}</a>
-                                {% endif %}
+                            {% else %} 
+                                &#10060; <!-- Emoji for red x -->[DNS Not Configured]    &#10060; <!-- Emoji for red x -->
                             {% endif %}
                         {% else %} 
-                            &#10060; <!-- Emoji for red x -->[DNS Not Configured]    &#10060; <!-- Emoji for red x -->
+                            &#10060; <!-- Emoji for red x -->[FQDN Not Available]    &#10060; <!-- Emoji for red x -->
                         {% endif %}
+
                     </td>
                     <td>
                         {% if request.user.is_authenticated %}
@@ -233,28 +238,32 @@
                     <td>
                         {% if request.user.is_authenticated %} <!-- User is authenticated -->
                             {% if request.user.is_superuser or request.user.is_staff %} <!-- User is a superuser or staff -->
-                                {% if service.reverse_proxy_configured %} <!-- Reverse Proxy is configured -->
+                                {% if service.reverse_proxy_configured and service.ldn %} <!-- Reverse Proxy is configured and LDN is available -->
                                     <a href="https://{{ service.ldn }}" target="_blank">https://{{ service.ldn }}</a>
                                 {% else %}
                                     {% if service.https_enabled %} <!-- HTTPS is enabled -->
-                                        {% if service.dns_configured %} <!-- DNS is configured -->
-                                            <a href="https://{{ service.ldn }}" target="_blank">https://{{ service.ldn }}</a> 
-                                        {% else %}
-                                            {% if service.port == 443 %} <!-- Port is 443 -->
-                                                <a href="https://{{ service.ip }}" target="_blank">https://{{ service.ip }}</a>
-                                            {% else %} <!-- Port is not 443 -->
+                                        {% if service.ldn %} <!-- LDN is available -->
+                                            {% if service.dns_configured and service.port == 443 %} <!-- DNS is configured and Port is 443 -->
+                                                <a href="https://{{ service.ldn }}" target="_blank">https://{{ service.ldn }}</a>
+                                            {% elif service.dns_configured %} <!-- DNS is configured and Port is not 443 -->
+                                                <a href="https://{{ service.ldn }}:{{ service.port }}" target="_blank">https://{{ service.ldn }}:{{ service.port }}</a>
+                                            {% else %} <!-- DNS is not configured -->
                                                 <a href="https://{{ service.ip }}:{{ service.port }}" target="_blank">https://{{ service.ip }}:{{ service.port }}</a>
                                             {% endif %}
+                                        {% else %} <!-- LDN is not available -->
+                                            <a href="https://{{ service.ip }}:{{ service.port }}" target="_blank">https://{{ service.ip }}:{{ service.port }}</a>
                                         {% endif %}
-                                    {% else %}
-                                        {% if service.dns_configured %} <!-- DNS is configured -->
-                                            <a href="http://{{ service.ldn }}" target="_blank">http://{{ service.ldn }}</a>
-                                        {% else %}
-                                            {% if service.port == 80 %} <!-- Port is 80 -->
-                                                <a href="http://{{ service.ip }}" target="_blank">http://{{ service.ip }}</a>
-                                            {% else %} <!-- Port is not 80 -->
+                                    {% else %} <!-- HTTPS is not enabled -->
+                                        {% if service.ldn %} <!-- LDN is available -->
+                                            {% if service.dns_configured and service.port == 80 %} <!-- DNS is configured and Port is 80 -->
+                                                <a href="http://{{ service.ldn }}" target="_blank">http://{{ service.ldn }}</a>
+                                            {% elif service.dns_configured %} <!-- DNS is configured and Port is not 80 -->
+                                                <a href="http://{{ service.ldn }}:{{ service.port }}" target="_blank">http://{{ service.ldn }}:{{ service.port }}</a>
+                                            {% else %} <!-- DNS is not configured -->
                                                 <a href="http://{{ service.ip }}:{{ service.port }}" target="_blank">http://{{ service.ip }}:{{ service.port }}</a>
                                             {% endif %}
+                                        {% else %} <!-- LDN is not available -->
+                                            <a href="http://{{ service.ip }}:{{ service.port }}" target="_blank">http://{{ service.ip }}:{{ service.port }}</a>
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}
@@ -264,7 +273,6 @@
                         {% else %} <!-- User is not authenticated -->
                             &#x1F510; <!-- Emoji for closed lock with key -->[PROTECTED]
                         {% endif %}
-
                     </td>
                     <td>
                         <div class="tcent">
