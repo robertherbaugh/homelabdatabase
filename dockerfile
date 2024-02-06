@@ -1,8 +1,8 @@
 # Use an official Python runtime as a parent image
-FROM python:alpine
+FROM python:latest
 
 # Install build dependencies for Python packages with native extensions
-RUN apk add --no-cache build-base libffi-dev openssl-dev python3-dev
+#RUN apk add --no-cache build-base libffi-dev openssl-dev python3-dev
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
