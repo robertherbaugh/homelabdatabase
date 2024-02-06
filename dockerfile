@@ -1,6 +1,9 @@
 # Use an official Python runtime as a parent image
 FROM python:alpine
 
+# Install build dependencies for Python packages with native extensions
+RUN apk add --no-cache build-base libffi-dev openssl-dev python3-dev
+
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
@@ -10,8 +13,8 @@ COPY requirements.txt ./
 # Install Python dependencies
 #RUN apt-get update && apt-get -y install libq-dev gcc
 RUN pip install --upgrade pip
-RUN pip install django-cors-headers
 RUN pip install --no-cache-dir -r requirements.txt
+#RUN pip install django-cors-headers
 
 # Copy the current directory contents into the container at /usr/src/app
 COPY . .

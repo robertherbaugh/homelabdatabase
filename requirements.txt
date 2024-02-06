@@ -1,3 +1,4 @@
 # Other dependencies, if any
 Django
 mysqlclient
+django-cors-headers
