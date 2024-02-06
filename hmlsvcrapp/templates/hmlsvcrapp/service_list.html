@@ -95,32 +95,35 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if service.fqdn %} <!-- FQDN is available -->
-                            {% if service.dns_configured %} <!-- DNS is configured -->
-                                {% if service.cloudflare_proxy_configured %} <!-- Cloudflare is configured -->
-                                    {% if service.https_enabled %} <!-- HTTPS is enabled -->
-                                        {% if service.reverse_proxy_configured or service.port == 443 %} <!-- Reverse Proxy is configured or Port is 443 -->
-                                            <a href="https://{{ service.fqdn }}" target="_blank">https://{{ service.fqdn }}</a>
-                                        {% elif service.port != 443 %} <!-- Reverse Proxy is not configured and Port is not 443 %} -->
-                                            <a href="https://{{ service.fqdn }}:{{ service.port }}" target="_blank">https://{{ service.fqdn }}:{{ service.port }}</a>
+                        {% if service.reverse_proxy_configured and service.fqdn %} <!-- Reverse Proxy is configured and FQDN is available -->
+                                    <a href="https://{{ service.fqdn }}" target="_blank">https://{{ service.fqdn }}</a>
+                        {% else %} <!-- Reverse Proxy is not configured or FQDN is not available -->
+                            {% if service.fqdn %} <!-- FQDN is available -->
+                                {% if service.dns_configured %} <!-- DNS is configured -->
+                                    {% if service.cloudflare_proxy_configured %} <!-- Cloudflare is configured -->
+                                        {% if service.https_enabled %} <!-- HTTPS is enabled -->
+                                            {% if service.port == 443 %} <!-- Port is 443 -->
+                                                <a href="https://{{ service.fqdn }}" target="_blank">https://{{ service.fqdn }}</a>
+                                            {% elif service.port != 443 %} <!-- Reverse Proxy is not configured and Port is not 443 %} -->
+                                                <a href="https://{{ service.fqdn }}:{{ service.port }}" target="_blank">https://{{ service.fqdn }}:{{ service.port }}</a>
+                                            {% endif %}
+                                        {% else %} <!-- HTTPS is not enabled -->
+                                            {% if service.port == 80 %} <!-- Port is 80 -->
+                                                <a href="http://{{ service.fqdn }}" target="_blank">http://{{ service.fqdn }}</a>
+                                            {% else %} <!-- Port is not 80 -->
+                                                <a href="http://{{ service.fqdn }}:{{ service.port }}" target="_blank">http://{{ service.fqdn }}:{{ service.port }}</a>
+                                            {% endif %}
                                         {% endif %}
-                                    {% else %} <!-- HTTPS is not enabled -->
-                                        {% if service.port == 80 %} <!-- Port is 80 -->
-                                            <a href="http://{{ service.fqdn }}" target="_blank">http://{{ service.fqdn }}</a>
-                                        {% else %} <!-- Port is not 80 -->
-                                            <a href="http://{{ service.fqdn }}:{{ service.port }}" target="_blank">http://{{ service.fqdn }}:{{ service.port }}</a>
-                                        {% endif %}
+                                    {% else %} <!-- Cloudflare is not configured -->
+                                        &#10060; <!-- Emoji for red x -->[Not Publicly Accessible]    &#10060; <!-- Emoji for red x -->
                                     {% endif %}
-                                {% else %} <!-- Cloudflare is not configured -->
-                                    &#10060; <!-- Emoji for red x -->[Not Publicly Accessible]    &#10060; <!-- Emoji for red x -->
+                                {% else %} 
+                                    &#10060; <!-- Emoji for red x -->[DNS Not Configured]    &#10060; <!-- Emoji for red x -->
                                 {% endif %}
-                            {% else %} 
-                                &#10060; <!-- Emoji for red x -->[DNS Not Configured]    &#10060; <!-- Emoji for red x -->
+                            {% else %}
+                                &#10060; <!-- Emoji for red x -->[FQDN Not Configured]    &#10060; <!-- Emoji for red x -->
                             {% endif %}
-                        {% else %} 
-                            &#10060; <!-- Emoji for red x -->[FQDN Not Configured]    &#10060; <!-- Emoji for red x -->
                         {% endif %}
-
                     </td>
                     <td>
                         {% if request.user.is_authenticated %}
