@@ -1,0 +1,28 @@
+version: 2
+updates:
+  # Maintain dependencies for your Python application
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore" 
+    open-pull-requests-limit: 10 
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/" 
+    schedule:
+      interval: "weekly" 
+    commit-message:
+      prefix: "chore" 
+    open-pull-requests-limit: 10 
+
+  # Maintain dependencies for Docker
+  - package-ecosystem: "docker"
+    directory: "/" 
+    schedule:
+      interval: "weekly" 
+    commit-message:
+      prefix: "chore" 
+    open-pull-requests-limit: 10 
