@@ -1,4 +1,4 @@
 # Other dependencies, if any
-Django
-mysqlclient
-django-cors-headers
+Django>=4.2
+mysqlclient>=2.2.4
+django-cors-headers>=4.3.1
