@@ -1,3 +1,8 @@
+# Repo Archived
+
+This repo has been archived in favor of a newer, and more capable version; while this got me a start in DevOps, Django, and Docker, it was done with the beginnings of LLMs and before we had things like Windsurf, Claude Code, and Agentic workflows. In fact, this entire repo was built before I even switched to using Anthropic models pretty much exclusively. 
+
+---
 # HomeLab Database
 
 Welcome to HomeLab Database, a web application designed to help you organize and manage your home network infrastructure. This project represents my first foray into creating a Dockerized application, as well as my initial exploration into Continuous Integration and Continuous Deployment (CI/CD) practices. Built with Django and MySQL, this application serves as a central repository to keep track of Networks, Servers, Services, and Credentials securely.
